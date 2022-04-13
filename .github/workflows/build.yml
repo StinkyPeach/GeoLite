@@ -1,0 +1,22 @@
+name: Build geoip.dat
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * 3"
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "README.md"
+      - ".gitignore"
+      - "LICENSE"
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get GeoLite2
+        env:
+          LICENSE_KEY: ${{ secrets.MAXMIND_LICEHSE }}
+        run: |
+          echo $LICENSE_KEY
