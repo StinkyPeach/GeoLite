@@ -19,4 +19,4 @@ jobs:
         env:
           LICENSE_KEY: ${{ secrets.MAXMIND_LICEHSE }}
         run: |
-          echo $LICENSE_KEY
+          echo ${LICENSE_KEY}
