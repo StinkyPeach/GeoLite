@@ -13,7 +13,7 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Set variables
         run: |
@@ -21,9 +21,10 @@ jobs:
         shell: bash
       - name: Get GeoLite2-City
         env:
+          ACCOUNT_ID: ${{ secrets.MAXMIND_ACCOUNT }}
           LICENSE_KEY: ${{ secrets.MAXMIND_LICEHSE }}
         run: |
-          curl -L "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=${LICENSE_KEY}&suffix=tar.gz" -o GeoLite2-City.tar.gz
+          curl -L -u "${ACCOUNT_ID}:${LICENSE_KEY}" "https://download.maxmind.com/geoip/databases/GeoLite2-City/download?suffix=tar.gz" -o GeoLite2-City.tar.gz
           tar zxvf ./GeoLite2-City.tar.gz -C .
           mkdir dist
           mv ./GeoLite2-City*/GeoLite2-City.mmdb ./dist/GeoLite2-City.mmdb
